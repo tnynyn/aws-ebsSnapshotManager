@@ -7,9 +7,10 @@ Created a new lambda function from scratch with python 2.7 runtime for each scri
 Edit the region variable in ebsSnapshotManagerDR.py as needed
 
 ## Usage
-Add a tag "Backup" with value "Yes" to the volume that needs to be backed up. Add another tag "Retention" with number of days to keep.  It will automatically be deleted after the number of days set.
+Add a tag "Backup" with value "Yes" to the volume that needs to be backed up.
+Add another tag "Retention" with number of days to keep.  It will automatically be deleted after the number of days set.
 
-Create a Cloudwatch schedule to trigger these events.
+Create a Cloudwatch schedule to trigger these events, make sure to set the schedule for ebsSnapshotManagerDR to run after the  ebsSnapshotManager function as snapshots need to be completed otherwise it will error out in the DR region.
 
 ## Credits and Thanks To:
 

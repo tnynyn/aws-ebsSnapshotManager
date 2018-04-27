@@ -1,5 +1,5 @@
 # aws-ebsSnapshotManager
-Simple Lambda function written in python that creates snapshots of volumes with retention policy (ebsManager) and copies to DR (ebsManager). Also retains tag information of volume name.
+Simple Lambda function written in python that creates snapshots of volumes with retention policy (ebsSnapshotManager) and copies to DR (ebsSnapshotManagerDR). Also retains tag information of volume name.
 
 ## Installation
 Created a new lambda function from scratch with python 2.7 runtime for each script (ebsSnapshotManager.py and ebsSnapshotManagerDR.py).  Zip each script separtely and upload. Created new role or attach existing role with the policy in this repository (ebsSnapshotManagerPolicy.json)

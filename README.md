@@ -11,5 +11,6 @@ Add a tag "Backup" with value "Yes" to the volume that needs to be backed up. Ad
 
 Create a Cloudwatch schedule to trigger these events.
 
-Most of the code was based on:
-https://github.com/neilspink/aws-ebs-snapshots-lambda
+Credits and Thanks To:
+
+https://github.com/neilspink/aws-ebs-snapshots-lambda  (as most of the code was based on this)

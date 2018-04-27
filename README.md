@@ -12,6 +12,8 @@ Add another tag "Retention" with number of days to keep.  It will automatically 
 
 Create a Cloudwatch schedule to trigger these events, make sure to set the schedule for ebsSnapshotManagerDR to run after the  ebsSnapshotManager function as snapshots need to be completed otherwise it will error out in the DR region.
 
+For notifications, you can set up a SNS topic and create a CloudWatch rule to trigger on EC2 snapshot creation and copy events with result "failed".
+
 ## Credits and Thanks To:
 
 https://github.com/neilspink/aws-ebs-snapshots-lambda  (as most of the code was based on this)

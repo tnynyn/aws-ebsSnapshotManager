@@ -57,16 +57,5 @@ def lambda_handler(event, context):
     snapshot_response = addl_ec.describe_snapshots(Filters=filters)
 
     for snap in snapshot_response['Snapshots']:
-        skipping_this_one = False
-        
-        for tag in snap['Tags']:
-            if tag['Key'] == 'KeepForever':
-                skipping_this_one = True
-                continue
-
-        if skipping_this_one == True:
-            print "\tSkipping SNAPSHOT %s (marked KeepForever)" % snap['SnapshotId']
-            # do nothing else
-        else:
-            print "\tDeleting SNAPSHOT %s" % snap['SnapshotId']
-            addl_ec.delete_snapshot(SnapshotId=snap['SnapshotId'])
+        print "\tDeleting SNAPSHOT %s" % snap['SnapshotId']
+        addl_ec.delete_snapshot(SnapshotId=snap['SnapshotId'])

@@ -73,7 +73,6 @@ def lambda_handler(event, context):
             { 'Name': 'tag:Type', 'Values': ['Automated'] },
         ]
         snapshot_response = ec2_client.describe_snapshots(Filters=filters)       
-        print "\tDeleting SNAPSHOT [%s]" % snapshot['SnapshotId']
-        ec2_client.delete_snapshot(SnapshotId=snapshot['SnapshotId'])
-                
-    
+        for snapshot in snapshot_response['Snapshots']:
+            print "\tDeleting SNAPSHOT [%s]" % snapshot['SnapshotId']
+            ec2_client.delete_snapshot(SnapshotId=snapshot['SnapshotId'])

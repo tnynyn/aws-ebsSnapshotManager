@@ -1,24 +1,22 @@
 import boto3
-import collections
 import datetime
 
-# Source Region - the region our instances are running in that we're backing up
 source_region = 'us-west-2' 
 copy_region = 'us-east-2'
 ec = boto3.client('ec2')
+addl_ec = boto3.client('ec2', region_name=copy_region)
 
 def lambda_handler(event, context):
+
     #Copy snapshot(s) based on snapshots created "today"
-    
     today_fmt = datetime.date.today().strftime('%Y-%m-%d')
     filters = [
         { 'Name': 'tag:CreatedOn', 'Values': [today_fmt] },
         { 'Name': 'tag:Type', 'Values': ['Automated'] },
     ]
     snapshot_response = ec.describe_snapshots(Filters=filters)
-    addl_ec = boto3.client('ec2', region_name=copy_region)
-    for snap in snapshot_response['Snapshots']:
-        print "\tCopying SNAPSHOT [%s] created from %s to %s" % ( snap['SnapshotId'], source_region, copy_region )
+    
+    for snap in snapshot_response['Snapshots']
         
         tags=snap['Tags']
         for tag in tags:
@@ -32,7 +30,7 @@ def lambda_handler(event, context):
         addl_snap = addl_ec.copy_snapshot(
             SourceRegion=source_region,
             SourceSnapshotId=snap['SnapshotId'],
-            Description=snap['Description'],
+            Description='Original Snapshot ID: ' + snap['SnapshotId'],
             DestinationRegion=copy_region
         )
 
@@ -45,7 +43,7 @@ def lambda_handler(event, context):
                 { 'Key': 'Name', 'Value': volume_name },
             ]
         )
-
+    print "\tSNAPSHOT [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], source_region, copy_region )
     delete_on = datetime.date.today().strftime('%Y-%m-%d')
         # limit snapshots to process to ones marked for deletion on this day
         # AND limit snapshots to process to ones that are automated only

@@ -33,7 +33,7 @@ def lambda_handler(event, context):
                     if tags["Key"] == 'Retention':
                         retention_days = int(tags["Value"])
                 except ValueError:
-                    retention_days = int(30)
+                    retention_days = int(30) # Sets retention period to 30 days if none is set
                     
         delete_date = datetime.date.today() + datetime.timedelta(days=retention_days)
         delete_fmt = delete_date.strftime('%Y-%m-%d')

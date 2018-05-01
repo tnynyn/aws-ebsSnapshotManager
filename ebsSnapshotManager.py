@@ -11,7 +11,7 @@ def lambda_handler(event, context):
     # Get all volume matching the tag Backup:Yes
     volumes = ec2_client.describe_volumes(Filters = [
            { 'Name' : "tag-key", 'Values' : ["Backup"] },
-           { 'Name' : "tag-value", 'Values' : ['yes'] }
+           { 'Name' : "tag-value", 'Values' : ['Yes'] }
        ])
        
     # Iterate over all volumes with matching tags

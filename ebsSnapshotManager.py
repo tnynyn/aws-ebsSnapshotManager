@@ -63,4 +63,4 @@ def lambda_handler(event, context):
         snapshot_response = ec2_client.describe_snapshots(Filters=filters)       
         for snapshot in snapshot_response['Snapshots']:
             ec2_client.delete_snapshot(SnapshotId=snapshot['SnapshotId'])
-            print "\SNAPSHOT [%s] deleted due to retention policy" % (snapshot['SnapshotId'])
+            print "\tSNAPSHOT [%s] deleted due to retention policy" % (snapshot['SnapshotId'])

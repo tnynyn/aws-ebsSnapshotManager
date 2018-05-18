@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         #Check snapshot status
         snap.load()
             if snap.state != 'Completed':
-                print snap['SnapshotId'] + " under creation and will not be copied"
+                print "\tWARNING: [%s] under creation and will not be copied" % snap['SnapshotId']
                 return
         
         addl_snap = addl_ec.copy_snapshot(

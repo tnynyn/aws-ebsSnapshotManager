@@ -26,7 +26,13 @@ def lambda_handler(event, context):
                 delete_on = tag['Value']
             if tag['Key'] == 'Name':
                 volume_name = tag['Value']
-                
+        
+        #Check snapshot status
+        snap.load()
+            if snap.state != 'Completed':
+                print snap['SnapshotId'] + " under creation and will not be copied"
+                return
+        
         addl_snap = addl_ec.copy_snapshot(
             SourceRegion=source_region,
             SourceSnapshotId=snap['SnapshotId'],

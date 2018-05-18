@@ -12,7 +12,7 @@ Edit the region variable in ebsSnapshotManagerDR.py as needed
 - Add tag "Backup" with value "Yes" (case-sensitive) to the volume that needs to be backed up.
 - Add tag "Retention" with number of days to keep (default is 30 days).  It will automatically be deleted after the number of days set. 
 
-- Create a Cloudwatch schedule to trigger these events, make sure to set the schedule for ebsSnapshotManagerDR to run after the  ebsSnapshotManager function as snapshots need to be completed otherwise it will error out in the DR region.
+- Create a Cloudwatch schedule to trigger these events, make sure to set the schedule for ebsSnapshotManagerDR to run after the  ebsSnapshotManager function as snapshots need to be completed otherwise it will not copy to the DR region.
 
 For notifications, you can set up a SNS topic and create a CloudWatch rule to trigger on EC2 snapshot creation and copy events with result "failed".
 

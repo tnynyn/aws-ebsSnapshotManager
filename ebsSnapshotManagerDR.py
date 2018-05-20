@@ -27,11 +27,6 @@ def lambda_handler(event, context):
             if tag['Key'] == 'Name':
                 volume_name = tag['Value']
         
-        #Check snapshot status
-        snap.load()
-            if snap.state != 'Completed':
-                print "\tWARNING: [%s] under creation and will not be copied" % snap['SnapshotId']
-                return
         
         addl_snap = addl_ec.copy_snapshot(
             SourceRegion=source_region,

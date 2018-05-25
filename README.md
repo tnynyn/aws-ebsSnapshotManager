@@ -16,6 +16,10 @@ Edit the region variable in ebsSnapshotManagerDR.py as needed
 
 For notifications, you can set up a SNS topic and create a CloudWatch rule to trigger on EC2 snapshot creation and copy events with result "failed".
 
+
+## Known Issues:
+ - AWS has a limitation of five concurrent CopySnapshot operation (Working on adding some checks and workaround for this)
+
 ## Credits and Thanks To:
 https://github.com/neilspink/aws-ebs-snapshots-lambda  (as most of the code was based on this)
 

@@ -37,7 +37,7 @@ def lambda_handler(event, context):
         if i < 5:
             #Check snapshot status         
             if snap['State'] == 'pending':
-                print "\tWARNING: [%s] under creation and will not be copied" % snap['SnapshotId']
+                print "\tWARNING: [%s] of [%s] under creation and will not be copied" % ( snap['SnapshotId'], volume_name)
                 #Mark Snapshot not copied
                 ec.create_tags(
                     Resources=[snap['SnapshotId']],
@@ -72,7 +72,7 @@ def lambda_handler(event, context):
             )
     
             i = i + 1
-            print "\tSNAPSHOT [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], source_region, copy_region )
+            print "\tSNAPSHOT [%s] of [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], volume_name, source_region, copy_region )
         else: 
             print "\tWARNING: Five concurrent CopySnapshot operation limit reached, [%s] of [%s] will not be copied" % ( snap['SnapshotId'], volume_name )
             #Mark Snapshot not copied

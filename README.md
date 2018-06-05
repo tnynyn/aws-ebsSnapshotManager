@@ -17,8 +17,8 @@ Simple Lambda function written in python that creates snapshots of volumes with 
 
 Note: AWS has a limitation of five concurrent CopySnapshot operation which this function works around by automatically tagging the "uncopied" snapshots (tag:DR,Value:No).  Running ebsSnapshotManagerDR2.py will copy snapshots with that tag and removes it after it is copied
 
-## Credits and Thanks To:
-https://github.com/neilspink/aws-ebs-snapshots-lambda  (as most of the code was based on this)
+## Related:
+https://github.com/neilspink/aws-ebs-snapshots-lambda
 
 ## Issues? Suggestions? Improvements?
 Sorry if I left out some details, new to this.  Let me know if there are any issues, suggestions, improvements for this function.  Thanks!

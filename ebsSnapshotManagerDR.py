@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         if i == 5:
             print "\tWARNING: Five concurrent CopySnapshot operation in progess, exiting..."
             raise SystemExit
-    i = i + 1
+        i = i + 1
     #Filter snapshots to be copied from PR to DR
     filters = [
         { 'Name': 'tag:Type', 'Values': ['Automated'] },

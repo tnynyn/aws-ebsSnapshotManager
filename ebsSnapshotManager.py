@@ -1,9 +1,11 @@
 import boto3
 import collections
 import datetime
-ec2_client = boto3.client('ec2',region_name='us-west-2')
+source_region = 'us-west-2' 
+copy_region = 'us-east-2'
+ec2_client = boto3.client('ec2',region_name=source_region)
 ec2_resource = boto3.resource('ec2')
-addl_ec = boto3.client('ec2', region_name='us-east-2')
+addl_ec = boto3.client('ec2', region_name=copy_region)
 
 def lambda_handler(event, context):
     # Get all volume matching the tag Backup:Yes

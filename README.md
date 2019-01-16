@@ -13,6 +13,6 @@ Each volume needs two tags for it to be setup for automatic snapshot handling:
 - Add tag "Retention" with number of days to keep (default is 30 days) to volume(s)
 - Create TWO Cloudwatch>Events>Rule to trigger these events, make sure run these functions in the following order:
   1. ebsSnapshotManager.py  = Run this FIRST, once per day. It will create snapshots in source_region, mark snapshots to be copied to DR, and deletes snapshots based on retention period (both regions)
-  2. ebsSnapshotManagerDR.py  = Run this SECOND. It will copy marked snapshots to DR (copy_region) and unmarks those snapshots copied so it wont be copied again. May be ran again if there are more than 5 snapshots copied to the DR region.
+  2. ebsSnapshotManagerDR.py  = Run this SECOND. It will copy marked snapshots to DR (copy_region) and unmarks those snapshots copied so it wont be copied again. Schedule another trigger if there are more than 5 snapshots to be copied to the DR region, see note below.
 
 Note: AWS has a limitation of five concurrent CopySnapshot operations to the DR region. ebsSnapshotManagerDR.py will stop if there are five operations in progess.  You can set it to run again on a schedule until all snapshots are copied over

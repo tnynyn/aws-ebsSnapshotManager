@@ -2,7 +2,7 @@
 Lambda function that creates snapshots of volumes, sets retention period, deletes snapshots based on retention period, marks them to be copied to the DR region, and copies to DR 
 
 Update March 26 2019:
-- Added another script for those who do not want to use a DR region, usage instructions below.
+- Added another script for those who do not want to use a DR region (ebsSnapshotManagerNODR.py)
 - Warning:  Just noticed script doesn't work with Python 3.6+, will sort out the issue when I get some time. Use 2.7 for now.
 
 ## Installation
@@ -19,11 +19,13 @@ Each volume needs two tags for it to be setup for automatic snapshot handling:
   1. ebsSnapshotManager.py  = Run this FIRST, once per day. It will create snapshots in source_region, mark snapshots to be copied to DR, and deletes snapshots based on retention period (both regions)
   2. ebsSnapshotManagerDR.py  = Run this SECOND. It will copy marked snapshots to DR (copy_region) and unmarks those snapshots copied so it wont be copied again. Schedule another trigger if there are more than 5 snapshots to be copied to the DR region, see note below.
 
-## Usage NO DR region
+## Usage WITHOUT DR region
 Each volume needs two tags for it to be setup for automatic snapshot handling:
 - Add tag "Backup" with value "Yes" (case-sensitive) to the volume(s) that needs to be snapshotted
 - Add tag "Retention" with number of days to keep (default is 30 days) to volume(s)
 - Create a Cloudwatch>Events>Rule to trigger/schedule the event
+
+
 
 Note: AWS has a limitation of five concurrent CopySnapshot operations to the DR region. ebsSnapshotManagerDR.py will stop if there are five operations in progess.  You can set it to run again on a schedule until all snapshots are copied over
 

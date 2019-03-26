@@ -27,6 +27,8 @@ Each volume needs two tags for it to be setup for automatic snapshot handling:
 
 
 
-Note: AWS has a limitation of five concurrent CopySnapshot operations to the DR region. ebsSnapshotManagerDR.py will stop if there are five operations in progess.  You can set it to run again on a schedule until all snapshots are copied over
+## Note
+AWS has a limitation of five concurrent CopySnapshot operations to the DR region. ebsSnapshotManagerDR.py will stop if there are five operations in progess.  You can set it to run again on a schedule until all snapshots are copied over
 
-Note 2:  Be sure to use PYTHON 2.7 RUNTIME as it'll error out with on 3.6+ 
+## Note 2
+Be sure to use PYTHON 2.7 RUNTIME as it'll error out with on 3.6+ 

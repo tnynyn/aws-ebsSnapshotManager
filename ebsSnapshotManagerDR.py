@@ -34,34 +34,35 @@ def lambda_handler(event, context):
                 volume_name = tag['Value']
         if i < 5:
             #Check for snapshots currently being created
-            if snap['State'] == 'pending':
+            if snap['State'] != 'pending':
+                #Copies snapshots to DR
+                addl_snap = addl_ec.copy_snapshot(
+                    SourceRegion=source_region,
+                    SourceSnapshotId=snap['SnapshotId'],
+                    Description='Original Snapshot ID: ' + snap['SnapshotId'],
+                    DestinationRegion=copy_region
+                )
+                #Creates tags for snaphots in DR
+                addl_ec.create_tags(
+                    Resources=[addl_snap['SnapshotId']],
+                    Tags=[
+                        { 'Key': 'CreatedOn', 'Value': created_on },
+                        { 'Key': 'DeleteOn', 'Value': delete_on },
+                        { 'Key': 'Type', 'Value': 'Automated' },
+                        { 'Key': 'Name', 'Value': volume_name },
+                    ]
+                )
+                #Mark snapshots that has been copied to DR
+                ec.create_tags(
+                    Resources=[snap['SnapshotId']],
+                    Tags=[
+                        { 'Key': 'DR', 'Value': '' },
+                    ]
+                )
+                i = i + 1
+                print "\tSNAPSHOT [%s] of [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], volume_name, source_region, copy_region )
+            else:
                 print "\tWARNING: [%s] of [%s] under creation and will not be copied" % ( snap['SnapshotId'], volume_name )
-            #Copies snapshots to DR                
-            addl_snap = addl_ec.copy_snapshot(
-                SourceRegion=source_region,
-                SourceSnapshotId=snap['SnapshotId'],
-                Description='Original Snapshot ID: ' + snap['SnapshotId'],
-                DestinationRegion=copy_region
-            )
-            #Creates tags for snaphots in DR
-            addl_ec.create_tags(
-                Resources=[addl_snap['SnapshotId']],
-                Tags=[
-                    { 'Key': 'CreatedOn', 'Value': created_on },
-                    { 'Key': 'DeleteOn', 'Value': delete_on },
-                    { 'Key': 'Type', 'Value': 'Automated' },
-                    { 'Key': 'Name', 'Value': volume_name },
-                ]
-            )
-            #Mark snapshots that has been copied to DR
-            ec.create_tags(
-                Resources=[snap['SnapshotId']],
-                Tags=[
-                    { 'Key': 'DR', 'Value': '' },
-                ]
-            )   
-            i = i + 1
-            print "\tSNAPSHOT [%s] of [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], volume_name, source_region, copy_region )
         else: 
             print "\tWARNING: Five concurrent CopySnapshot operation limit reached, [%s] of [%s] will not be copied" % ( snap['SnapshotId'], volume_name )
     

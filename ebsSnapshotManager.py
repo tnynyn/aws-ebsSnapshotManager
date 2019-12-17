@@ -20,7 +20,6 @@ def lambda_handler(event, context):
         
         # Create snapshot
         snapshot = ec2_client.create_snapshot(VolumeId = volume_id, Description = "Created by lambda function ebsSnapshotManager") 
-        snapshot_id = snapshot['SnapshotId']
         
         # Get snapshot tag info
         snap = ec2_resource.Snapshot(snapshot['SnapshotId'])
@@ -49,7 +48,7 @@ def lambda_handler(event, context):
             ]
         )
         
-        print ("SNAPSHOT %s created for %s : %s" % (snapshot_id, volume_name, volume_id)
+        print ("SNAPSHOT %s created for %s : %s" % (snapshot['SnapshotId'], volume_name, volume_id)
 
         # Deletes snapshot based on "delete_on" date for primary region 
         delete_on = datetime.date.today().strftime('%Y-%m-%d')

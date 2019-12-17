@@ -14,7 +14,7 @@ def lambda_handler(event, context):
     snapshot_response = addl_ec.describe_snapshots(Filters=filters)
     for snap in snapshot_response['Snapshots']:
         if i == 5:
-            print "\tWARNING: Five concurrent CopySnapshot operation in progess, exiting..."
+            print('WARNING: Five concurrent CopySnapshot operation in progess, exiting...')
             raise SystemExit
         i = i + 1
     #Filter snapshots to be copied from PR to DR
@@ -60,9 +60,9 @@ def lambda_handler(event, context):
                     ]
                 )
                 i = i + 1
-                print "\tSNAPSHOT [%s] of [%s] copied from [%s] to [%s]" % ( snap['SnapshotId'], volume_name, source_region, copy_region )
+                print("SNAPSHOT %s  of  %s  copied from  %s  to  %s " % (snap[SnapshotId], volume_name, source_region, copy_region))
             else:
-                print "\tWARNING: [%s] of [%s] under creation and will not be copied" % ( snap['SnapshotId'], volume_name )
+                print("WARNING %s  of  %s  is still pending and will not be copied" % (snap[SnapshotId], volume_name))
         else: 
-            print "\tWARNING: Five concurrent CopySnapshot operation limit reached, [%s] of [%s] will not be copied" % ( snap['SnapshotId'], volume_name )
+            print("WARNING Five concurrent CopySnapshot operation limit reached  %s  of  %s  will not be copied" % (snap[SnapshotId], volume_name))
     

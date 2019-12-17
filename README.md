@@ -1,7 +1,7 @@
 # aws-ebsSnapshotManager
 Lambda function that creates snapshots of volumes, sets retention period, deletes snapshots based on retention period, marks them to be copied to the DR region, and copies to DR
 
-12/17/2019: Updated print syntax for python3
+12/17/2019: Updated print syntax for python3\
 03/26/2019: Added another script for those who do not want to use a DR region (ebsSnapshotManagerNODR.py)
 
 

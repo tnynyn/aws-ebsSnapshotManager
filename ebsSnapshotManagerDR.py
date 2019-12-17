@@ -60,9 +60,9 @@ def lambda_handler(event, context):
                     ]
                 )
                 i = i + 1
-                print("SNAPSHOT %s  of  %s  copied from  %s  to  %s " % (snap[SnapshotId], volume_name, source_region, copy_region))
+                print("SNAPSHOT %s  of  %s  copied from  %s  to  %s " % (snap['SnapshotId'], volume_name, source_region, copy_region))
             else:
-                print("WARNING %s  of  %s  is still pending and will not be copied" % (snap[SnapshotId], volume_name))
+                print("WARNING %s  of  %s  is still pending and will not be copied" % (snap['SnapshotId'], volume_name))
         else: 
-            print("WARNING Five concurrent CopySnapshot operation limit reached  %s  of  %s  will not be copied" % (snap[SnapshotId], volume_name))
+            print("WARNING Five concurrent CopySnapshot operation limit reached  %s  of  %s  will not be copied" % (snap['SnapshotId'], volume_name))
     

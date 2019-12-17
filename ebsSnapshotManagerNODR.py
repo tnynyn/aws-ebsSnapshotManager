@@ -39,7 +39,7 @@ def lambda_handler(event, context):
                 { 'Key': 'DR', 'Value': 'No' }
             ]
         )        
-        print "\tSNAPSHOT [%s] created for [%s]:[%s]" % (snapshot_id, volume_name, volume_id)             
+        print ("SNAPSHOT [%s] created for [%s]:[%s]" % (snapshot_id, volume_name, volume_id))
     # Deletes snapshot based on "delete_on" date for PR and DR regions 
     delete_on = datetime.date.today().strftime('%Y-%m-%d')
     filters = [
@@ -49,4 +49,4 @@ def lambda_handler(event, context):
     snapshot_response = ec2_client.describe_snapshots(Filters=filters)       
     for snapshot in snapshot_response['Snapshots']:
         ec2_client.delete_snapshot(SnapshotId=snapshot['SnapshotId'])
-        print "\tSNAPSHOT [%s] deleted due to retention policy" % (snapshot['SnapshotId'])         
+        print ("SNAPSHOT [%s] deleted due to retention policy" % (snapshot['SnapshotId']))

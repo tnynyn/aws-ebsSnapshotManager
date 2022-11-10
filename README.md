@@ -1,4 +1,4 @@
-# update
+# Final update 2022
 AWS EC2 now has snapshot management
 # aws-ebsSnapshotManager
 Lambda function that creates snapshots of volumes, sets retention period, deletes snapshots based on retention period, marks them to be copied to the DR region, and copies to DR
